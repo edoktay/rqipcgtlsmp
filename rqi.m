@@ -9,9 +9,9 @@ function [x, its, errsigma, errx] = rqi(A,b,typec,precw,precc,precrqi)
 % Inputs
 % A        : input matrix
 % b        : rhs
+% typec    : type of cholesky factorization (1 - cholesky with two-sided diagonal scaling, 2 - householder qr)
 % precw    : working precision for PCGTLS (1 - half, 2 - single, 3 - double). Default is 3.
 % precc    : cholesky precision in PCGTLS (1 - half, 2 - single, 3 - double). Default is 3.
-% typec    : type of cholesky factorization (1 - cholesky with two-sided diagonal scaling, 2 - householder qr)
 % precrqi  : working precision for RQI (1 - half, 2 - single, 3 - double). Default is 3.
 %
 % Outputs

@@ -2,9 +2,6 @@
 close all
 clear all
 
-addpath('AdvanpixMCT/')
-addpath('Multi_precision_NLA_kernels-master/')
-
 rng(1);
 m = 30;
 n = 15;
@@ -35,20 +32,10 @@ A = A_tilde;
 b = b_tilde+r;
 A = A+ 0.05*rand(m,n); 
 
-% SAb = svd([A,b]);
-% mSAb = min(SAb);
-% SA = svd(A);
-% mSA = min(SA);
-% (1-(mSAb^2/mSA^2))/cond(A,2) %%%%%
-% 1/(sqrt(m)*(n)*cond(A,2))
-% 4.8*1e-4
-% stop
-
-snbase = strcat('figs/bjorck_');
-[x1, its1, errsigma1, errx1] = rqi(A,b,strcat(snbase,'rqi'));
+precw = 2; precc = 1; typec = 2;  precrqi = 3;
+[x1, its1, errsigma1, errx1] = rqi(A,b,typec,3,3,3);
 figure
-precw = 2; precc = 1; typec = 3; precr = 4; precrqi = 3;
-[x, its, errsigma, errx] = rqi_mp(A,b,precw,precc,typec,precr,precrqi,strcat(snbase,'rqi_mp_',num2str(precw),num2str(precc),num2str(precr),num2str(precrqi)));
+[x, its, errsigma, errx] = rqi(A,b,typec,precw,precc,precrqi);
 
 % plot errors
 figure
@@ -84,11 +71,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u_r,u,u_p,u_c$) = (quad,double,single,half)','Interpreter','latex')
-
-savename = strcat(snbase,'total');
-savefig(strcat(savename,'.fig'));
-saveas(gcf, strcat(savename,'.pdf'));
+title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
 
 %% Random matrix test
 close all
@@ -100,11 +83,7 @@ n = 60;
 tol = 1e-6;
 
 A_tilde = rand(m,n);
-%rng(1)
-%b_tilde = rand(m,1);
 b_tilde = ones(m,1);
-% A = A_tilde;
-% b = b_tilde;
 
 % random perturbations
 E = tol*rand(m,n);
@@ -112,23 +91,10 @@ r = tol*rand(m,1);
 A = A_tilde + E;
 b = b_tilde+r;
 
-% SAb = svd([A,b]);
-% mSAb = min(SAb);
-% SA = svd(A);
-% mSA = min(SA);
-% (1-(mSAb^2/mSA^2))/cond(A,2) %%%%%
-% 1/(sqrt(m)*(n)*cond(A,2))
-% 4.8*1e-4
-% stop
-
-%A = A+ 0.001*rand(m,n); %for single prec
-%A = A+ 0.05*rand(m,n); %for half prec 
-
-snbase = strcat('figs/rand_');
- [x1, its1, errsigma1, errx1] = rqi(A,b,strcat(snbase,'rqi'));
- figure
-precw = 2; precc = 1; typec = 3; precr = 4; precrqi = 3;
-[x, its, errsigma, errx] = rqi_mp(A,b,precw,precc,typec,precr,precrqi,strcat(snbase,'rqi_mp_',num2str(precw),num2str(precc),num2str(precr),num2str(precrqi)));
+precw = 2; precc = 1; typec = 2;  precrqi = 3;
+[x1, its1, errsigma1, errx1] = rqi(A,b,typec,3,3,3);
+figure
+[x, its, errsigma, errx] = rqi(A,b,typec,precw,precc,precrqi);
 
 % plot errors
 figure
@@ -164,11 +130,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u_r,u,u_p,u_c$) = (quad,double,single,half)','Interpreter','latex')
-
-savename = strcat(snbase,'total');
-savefig(strcat(savename,'.fig'));
-saveas(gcf, strcat(savename,'.pdf'));
+title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
 
 %% Delta matrix test
 close all
@@ -195,29 +157,10 @@ r = tol*r1.*b_tilde;
 A = A_tilde + E;
 b = b_tilde+r;
 
-% Thm 4.6.1 in Bjorck book for uniques soln (if SA(end)>SAb(end) then unique soln)
-% SA = svd(A);
-% SAb = svd([A,b]);
-% SA(end)
-% SAb(end)
-
-%A = A+ 0.001*rand(m,n); %for single prec
-%A = A+ 0.05*rand(m,n); %for half prec 
-
-% SAb = svd([A,b]);
-% mSAb = min(SAb);
-% SA = svd(A);
-% mSA = min(SA);
-% (1-(mSAb^2/mSA^2))/cond(A,2) %%%%%
-% 1/(sqrt(m)*(n)*cond(A,2))
-% 4.8*1e-4
-% stop
-
-snbase = strcat('figs/delta_');
- [x1, its1, errsigma1, errx1] = rqi(A,b,strcat(snbase,'rqi'));
- figure
-precw = 2; precc = 1; typec = 3; precr = 4; precrqi = 3;
-[x, its, errsigma, errx] = rqi_mp(A,b,precw,precc,typec,precr,precrqi,strcat(snbase,'rqi_mp_',num2str(precw),num2str(precc),num2str(precr),num2str(precrqi)));
+precw = 2; precc = 1; typec = 2;  precrqi = 3;
+[x1, its1, errsigma1, errx1] = rqi(A,b,typec,3,3,3);
+figure
+[x, its, errsigma, errx] = rqi(A,b,typec,precw,precc,precrqi);
 
 % plot errors
 figure
@@ -253,11 +196,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u_r,u,u_p,u_c$) = (quad,double,single,half)','Interpreter','latex')
-
-savename = strcat(snbase,'total');
-savefig(strcat(savename,'.fig'));
-saveas(gcf, strcat(savename,'.pdf'));
+title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
 
 %% Vanhuffel matrix test
 clear all
@@ -280,24 +219,11 @@ r = tol*rand(m,1);
 A = A_tilde + E;
 b = b_tilde+r;
 
-% SAb = svd([A,b]);
-% mSAb = min(SAb);
-% SA = svd(A);
-% mSA = min(SA);
-% (1-(mSAb^2/mSA^2))/cond(A,2) %%%%% BUT THIS IS ALWAYS WAY BIGGER
-% 1/(sqrt(m)*(m-2)*cond(A,2)) %%%%%
-% 4.8*1e-4
-% stop
+precw = 2; precc = 1; typec = 2;  precrqi = 3;
 
-%A = A+ 0.001*rand(m,n); %for single prec
-%A = A+ 0.05*rand(m,n); %for half prec 
-
-snbase = strcat('figs/vanhuffel_');
-
- [x1, its1, errsigma1, errx1] = rqi(A,b,strcat(snbase,'rqi'));
- figure
-precw = 2; precc = 1; typec = 3; precr = 4; precrqi = 3;
-[x, its, errsigma, errx] = rqi_mp(A,b,precw,precc,typec,precr,precrqi,strcat(snbase,'rqi_mp_',num2str(precw),num2str(precc),num2str(precr),num2str(precrqi)));
+[x1, its1, errsigma1, errx1] = rqi(A,b,typec,3,3,3);
+figure
+[x, its, errsigma, errx] = rqi(A,b,typec,precw,precc,precrqi);
 
 % plot errors
 figure
@@ -333,11 +259,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u_r,u,u_p,u_c$) = (quad,double,single,half)','Interpreter','latex')
-
-savename = strcat(snbase,'total');
-savefig(strcat(savename,'.fig'));
-saveas(gcf, strcat(savename,'.pdf'));
+title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
 
 %% Toeplitz matrix test
 clear all
@@ -346,7 +268,7 @@ close all
 rng(1);
 m = 100;
 omega = 2;
-gamma = 0.001;%scaling factor: scale r so that norm(r)=gamma*norm(b_tilde). similar to E.
+gamma = 0.001;
 beta = 1.25;
 tol = 1e-6;
 
@@ -365,30 +287,10 @@ r = r*gamma*norm(b_tilde)/norm(r);
 A = A_tilde + E;
 b = b_tilde+r;
 
-% SAb = svd([A,b]);
-% mSAb = min(SAb);
-% SA = svd(A);
-% mSA = min(SA);
-% (1-(mSAb^2/mSA^2))/cond(A,2) %%%%% BUT THIS IS LARGER
-% 1/(sqrt(m)*(m-2)*cond(A,2)) %%%%%
-% 4.8*1e-4
-% stop
-
-% Thm 4.6.1 in Bjorck book for uniques soln (if SA(end)>SAb(end) then unique soln)
-% SA = svd(A);
-% SAb = svd([A,b]);
-% SA(end)
-% SAb(end)
-
-%A = A+ 0.001*rand(m,m-2*omega); %for single prec
-%A = A+ 0.05*rand(m,m-2*omega); %for half prec 
-
-snbase = strcat('figs/toeplitz_');
-
- [x1, its1, errsigma1, errx1] = rqi(A,b,strcat(snbase,'rqi'));
- figure
-precw = 2; precc = 1; typec = 3; precr = 4; precrqi = 3;
-[x, its, errsigma, errx] = rqi_mp(A,b,precw,precc,typec,precr,precrqi,strcat(snbase,'rqi_mp_',num2str(precw),num2str(precc),num2str(precr),num2str(precrqi)));
+precw = 2; precc = 1; typec = 2;  precrqi = 3;
+[x1, its1, errsigma1, errx1] = rqi(A,b,typec,3,3,3);
+figure
+[x, its, errsigma, errx] = rqi(A,b,typec,precw,precc,precrqi);
 
 % plot errors
 figure
@@ -403,12 +305,6 @@ hold off
 
 % Ensure only integers labeled on x axis
 xlim([1 numel(errx)])
-% atm = get(gca,'xticklabels');
-% xlab = [];
-% mx = [1 4 6 7 11 15];
-% for i = 1:numel(mx)
-%     xlab(i) = mx(i);
-% end
 atm = get(gca,'xticklabels');
 xlab = [];
 m = str2double(atm);
@@ -430,8 +326,4 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u_r,u,u_p,u_c$) = (quad,double,single,half)','Interpreter','latex')
-
-savename = strcat(snbase,'total');
-savefig(strcat(savename,'.fig'));
-saveas(gcf, strcat(savename,'.pdf'));
+title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
