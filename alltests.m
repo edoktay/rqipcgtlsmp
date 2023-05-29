@@ -71,7 +71,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
+title('($u,u_p,u_q$) = (double,single,half)','Interpreter','latex')
 
 %% Random matrix test
 close all
@@ -130,7 +130,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
+title('($u,u_p,u_q$) = (double,single,half)','Interpreter','latex')
 
 %% Delta matrix test
 close all
@@ -196,7 +196,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
+title('($u,u_p,u_q$) = (double,single,half)','Interpreter','latex')
 
 %% Vanhuffel matrix test
 clear all
@@ -259,7 +259,7 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
+title('($u,u_p,u_q$) = (double,single,half)','Interpreter','latex')
 
 %% Toeplitz matrix test
 clear all
@@ -326,4 +326,4 @@ set(a,'LineWidth',1.5);
 set(a,'MarkerSize',10);
 h = legend('rerrx','rerrs','rerrx\_mp','rerrs\_mp');
 set(h,'Interpreter','latex');
-title('($u,u_p,u_c$) = (double,single,half)','Interpreter','latex')
+title('($u,u_p,u_q$) = (double,single,half)','Interpreter','latex')
