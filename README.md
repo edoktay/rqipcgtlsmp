@@ -1,7 +1,7 @@
 # rqipcgtlsmp
 MATLAB codes for performing RQI-PCGTLS-MP algorithm for solving total least squares problems.
 
-This code can be used to reproduce the experiments in 
+This code can be used to reproduce the experiments in Mixed Precision Rayleigh Quotient Iteration for Total Least Squares Problems (http://arxiv.org/abs/2305.19028)
 
 
 ## Included MATLAB files
